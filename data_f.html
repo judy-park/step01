@@ -3,12 +3,7 @@
 <html>
 <head lang="ko">
     <meta charset="UTF-8">
-    <title>each function</title>
-    <style>
-        .even{background:#fff;}
-        .odd{background:#ccc;}
-
-    </style>
+    <title>.data() method</title>
 </head>
 <body>
 <ul>
@@ -39,8 +34,8 @@
     var fdata = firstLi.data('myobj');
     firstLi.text(fdata.name);
 
-    //data메소드를 사용할때 setData이벤트와 getData이벤트가 발생한다.
-    $(document).bind('setData', function(evt, key, value){  //이벤트 개체, 데이터 키, 데이터 값
+    //data메소드를 사용할때 setData이벤트와 getData이벤트가 발생한다. 이부분이 실행이 안되는거 같음. setData..
+    $(document).bind('setData', function(evt, key, value){  //이벤트 개체, 데이터 키, 데이터 값  .bind(이벤트 타입,
         if (key == 'clock'){
             console.log(value);
             $('.updateTime').html(value+'abcd');
@@ -49,7 +44,7 @@
 
     //1초마다 데이터를 생성한다. setData이벤트가 1초마다 발생하면서 화면이 업데이트 된다.
     setInterval(function(){
-        $(document).data('clock', new Date().toString());
+        $(document).data('clock', new Date().toString());  // clock 가 뒤에 오는 시간 문자열로 세팅됨. data(key, value)
     }, 1000);
 
 })(jQuery);
