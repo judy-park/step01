@@ -1,10 +1,60 @@
+
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="ko">
     <meta charset="UTF-8">
-    <title></title>
+    <title>each function</title>
+    <style>
+        .even{background:#fff;}
+        .odd{background:#ccc;}
+
+    </style>
 </head>
 <body>
+<ul>
+    <li>test</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+    <li>5</li>
+</ul>
+
+<div id="time" class="updateTime" style="border:1px solid red;height:40px;width:100px;">22</div>
+
+
+<script type="text/JavaScript" src="script/jquery-1.11.2.min.js"></script>
+<script type="text/JavaScript">
+(function($){
+
+ /**
+     * $().data();
+     * dom요소에 메타데이터를 추가한다.
+     */
+    var firstLi = $('ul li').eq(0);
+
+    firstLi.data('myobj', {
+        name: 'it\' my obj'
+    });
+
+    var fdata = firstLi.data('myobj');
+    firstLi.text(fdata.name);
+
+    //data메소드를 사용할때 setData이벤트와 getData이벤트가 발생한다.
+    $(document).bind('setData', function(evt, key, value){  //이벤트 개체, 데이터 키, 데이터 값
+        if (key == 'clock'){
+            console.log(value);
+            $('.updateTime').html(value+'abcd');
+        }
+    });
+
+    //1초마다 데이터를 생성한다. setData이벤트가 1초마다 발생하면서 화면이 업데이트 된다.
+    setInterval(function(){
+        $(document).data('clock', new Date().toString());
+    }, 1000);
+
+})(jQuery);
+
+</script>
 
 </body>
 </html>
