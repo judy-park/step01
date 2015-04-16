@@ -1,10 +1,95 @@
+
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head lang="ko">
     <meta charset="UTF-8">
-    <title></title>
+    <title>.data() method</title>
+    <style type="text/css">
+        .reveal{display:none;}
+    </style>
 </head>
 <body>
+<select id="country">
+    <option value="US">US</option>
+    <option value="CA">CA</option>
+</select>
+
+<div>
+    <span class="reveal">ready</span>
+    <span class="reveal">ready2</span>
+    <span class="reveal">ready3</span>
+    <span class="reveal">ready4</span>
+</div>
+
+
+<script type="text/JavaScript" src="script/jquery-1.11.2.min.js"></script>
+<script type="text/JavaScript">
+(function($){
+/* 	$('.clicky').click( function(){
+        console.log($(this));
+	    $(this).addClass('clicked'); //$(this)는 클릭된 a
+	    setTimeout( function(){  // 일정시간이 지나면 추가했던 클래스 삭제
+	        console.log($(this)); // $(this)는 window setTimedout메소드까지 this의 영역이 포함되지 않음
+	        $(this).removeClass('clicked');
+	    }, 1000); // 1초후에
+	});*/
+
+    // $(this)를 변수에 넣어 사용
+    $('.clicky').click( function(){
+	    var element = this;  // 변수 선언
+	    $(element).addClass('clicked'); // 선택된 엘리먼트의 클래스 추가
+	    setTimeout( function(){  // 일정시간이 지나면 추가했던 클래스 삭제
+	        $(element).removeClass('clicked');
+	    }, 1000); // 1초후에
+	});
+
+
+ /*    // country 셀렉터가 마우스에 의해 변경되었을 때 가시성을 변경
+    $('#country').change( function(){
+        $('#state').toggle( $(this).val() == "US");
+        $('#province').toggle($(this).val() == 'CA');
+    });
+
+    // country 셀렉터가 키보드에 의해 변경결되었을 때 가시성을 변경
+    $('#country').keyup( function(){
+        $('#state').toggle( $(this).val() == "US");
+        $('#province').toggle($(this).val() == 'CA');
+    }); */
+
+    $('#country') //#conunty를 찾아서
+    .bind( 'change keyup', function(){ // 마우스 이벤트나 키이벤트가 발생하는 경우
+        var value = $(this).val(); // 해당폼에서 값을 가져와서 변수 value에 넣음
+        $('#state').toggle(value == 'US'); // value 가 US일때 #state의 값이 보임
+        $('#province').toggle(value == 'CA'); // value가 CA일때 #province의 값이 보임
+    })
+    .trigger('change') //change이벤트를 자동으로 실행
+
+
+jQuery.slowEach = function(array, interval, callback){ // 선택자(배열), 간격, 실행 함수 를 변수로 받음
+    if( ! array.length) return; // 배열의 길이를 반환.
+    var i = 0; // 초기값
+    next(); // 0이 아니라면 next()실행
+
+    function next(){
+        if(callback.call(array[i], i, array[i]) !== false)
+            if(++i < array.length)
+                setTimeout(next, interval); // next를 interval이 지난 후에 실행
+    }
+    return array;
+};
+
+jQuery.fn.slowEach = function(interval, callback){  // slowEach는 간격, 함수를 받아옴 - show()
+    return jQuery.slowEach(this, interval, callback); // 선택자(배열), 간격, 함수를 반환 show();
+};
+
+$('.reveal').slowEach(500, function(){ //사용자 정의함수 실행
+    $(this).show();
+});
+
+
+})(jQuery);
+
+</script>
 
 </body>
 </html>
