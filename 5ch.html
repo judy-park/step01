@@ -21,6 +21,10 @@
     <span class="reveal">ready4</span>
 </div>
 
+<form name=myForm>
+    <input type=text name=myText style="text-align:center">
+</form>
+
 
 <script type="text/JavaScript" src="script/jquery-1.11.2.min.js"></script>
 <script type="text/JavaScript">
@@ -64,18 +68,17 @@
     })
     .trigger('change') //change이벤트를 자동으로 실행
 
-
 jQuery.slowEach = function(array, interval, callback){ // 선택자(배열), 간격, 실행 함수 를 변수로 받음
-    if( ! array.length) return; // 배열의 길이를 반환.
-    var i = 0; // 초기값
-    next(); // 0이 아니라면 next()실행
+    if( ! array.length) return; // 배열의 전체 숫자를
+    var i = 0; // 인덱스값 초기화
+    next(); // next()실행
 
-    function next(){
-        if(callback.call(array[i], i, array[i]) !== false)
-            if(++i < array.length)
-                setTimeout(next, interval); // next를 interval이 지난 후에 실행
+    function next(){ // 일정한 시간 간격으로 해당 코드를 실행
+        if(callback.call(array[i], i, array[i]) !== false) // 첫번째는 현재의 객체, 2번부터 매개변수 (현재객체, 인덱스, 매개변수)가 false가 아니라면
+            if(++i < array.length) // 인데스에 1을 더하고 전체 배열보다 작으면
+                setTimeout(next, interval); // next 함수의 코드를 interval이 지난 후에 실행.
     }
-    return array;
+    return array; // 배열을 되돌려줌
 };
 
 jQuery.fn.slowEach = function(interval, callback){  // slowEach는 간격, 함수를 받아옴 - show()
@@ -83,8 +86,13 @@ jQuery.fn.slowEach = function(interval, callback){  // slowEach는 간격, 함�
 };
 
 $('.reveal').slowEach(500, function(){ //사용자 정의함수 실행
-    $(this).show();
+    $(this).show(); // 현재의 객체를 show()한다.
 });
+
+
+
+
+
 
 
 })(jQuery);
