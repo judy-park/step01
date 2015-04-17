@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+    <meta charset="UTF-8">
+    <title>Dimensions</title>
+    <style>
+        #foo{width:300;padding:10px;height:20px;border:1px solid black;overflow:auto;position:relative;}
+    </style>
+</head>
+<body>
+
+<input type="button" id="bar" value="Click to scroll to last paragraph "/>
+<input type="button" id="bam" value="Click to scroll to last paragraph animation"/>
+
+<div id="foo">
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>happy birthday to you</p>
+    <p>마지막.happy birthday to you</p>
+</div>
+
+<script type="text/JavaScript" src="script/jquery-1.11.2.min.js"></script>
+<script type="text/JavaScript">
+(function($){
+// 요소가 보이도록 스크롤 하기
+var $foo = jQuery('#foo'); // 변수에 담기.
+
+$('#bar').click(function(){
+  var lastParagraphPosition = jQuery('#foo p:last').position(); //마지막 p위치를 담기.top, left
+  var scrollPosition = $foo.scrollTop() + lastParagraphPosition.top; //  foo의 scrollTop값에 마지막 p의 top 값을 더함
+  $foo.scrollTop(scrollPosition); // foo의 스크롤Top값을 다시 셋팅
+});
+
+$('#bam').click(function(){
+  var lastParagraphPosition = jQuery('#foo p:last').position(); //마지막 p위치를 담기.top, left
+  var scrollPosition = $foo.scrollTop() + lastParagraphPosition.top; //  foo의 scrollTop값에 마지막 p의 top 값을 더함
+  jQuery('#foo').animate({scrollTop:scrollPosition}, 1000); // foo의 스크롤Top값을 다시 셋팅
+});
+
+// 요소가 표시영역안에 있는지 알아내기
+})(jQuery);
+
+
+
+</script>
+
+</body>
+</html>

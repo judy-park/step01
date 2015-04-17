@@ -76,26 +76,59 @@ jQuery.slowEach = function(array, interval, callback){ // 선택자(배열), 간
     function next(){ // 일정한 시간 간격으로 해당 코드를 실행
         if(callback.call(array[i], i, array[i]) !== false) // 첫번째는 현재의 객체, 2번부터 매개변수 (현재객체, 인덱스, 매개변수)가 false가 아니라면
             if(++i < array.length) // 인데스에 1을 더하고 전체 배열보다 작으면
-                setTimeout(next, interval); // next 함수의 코드를 interval이 지난 후에 실행.
+                setTimeout(next, interval); // next 함수의 코드를 interval이 지난 후에 실행. 질문1. next코드를 왜 next라고 써도 되는지...이해안됨.
     }
     return array; // 배열을 되돌려줌
 };
 
-jQuery.fn.slowEach = function(interval, callback){  // slowEach는 간격, 함수를 받아옴 - show()
+jQuery.fn.slowEach = function(interval, callback){  // slowEach는 간격, 함수를 받아옴 - show().. 왜 .fn을 써서 갑자기 인자를 세개로 변경할까?
     return jQuery.slowEach(this, interval, callback); // 선택자(배열), 간격, 함수를 반환 show();
 };
 
-$('.reveal').slowEach(500, function(){ //사용자 정의함수 실행
+$('.reveal').slowEach(500, function(){ //객체를 받아서 정해준 시간 간격단위로 함수 실행. 사용자 정의함수 실행
     $(this).show(); // 현재의 객체를 show()한다.
 });
 
 
+// 타이머. 일정한 간격으로 계속해서 어떤일을 끝까지..반복하는 경우 setIntervla을 적용
+var timer = setInterval(function(){
+    console.log('time');
+    var now = new Date();
+    var H = now.getHours();
+    var M = now.getMinutes();
+    var S = now.getSeconds();
+    myForm.myText.value = "지금은 " + H + "시" + M + "분" + S + "초";
+}, 1000 );
 
+// jQuery 토클 플러그인
+jQuery.fn.toggleCheck = function(){
+    return this.toggleAttr('checked', true, false, check);
+};
 
+jQuery.fn.toggleAttr = function(name, onValue, offValue, on){
+    function set ($element, on){
+        var value = on ? onValue : offValue; // 삼항연산자 (불리언표현식) ? 참이면실행 : 거짓이면 실행
+        return value == null ?
+        $element.removeAttr( name ) :
+        $element.attr( name, value );
+    }
+    return on !== undefined ?
+    set ( this, on ) :
+    this.each ( function (i, element) {
+        var $element = $(element);
+        set ( $element, $element.attr(name) !== onValue);
 
+    });
+};
 
+// $('.clientX') // 느림
+// $('td.clientX') // 빠를 수 있음
+// $('#log.clientX') // 훨씬 더 빠를 수 있음
+// $('#log td.clientX') // 특정 브라우저에서 빠를 수 있음
 
 })(jQuery);
+
+
 
 </script>
 
