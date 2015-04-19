@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>iRock</title>
+</head>
+<body>
+    <div>
+        <img src="images.jpeg" alt="irock" id="rockImg" onclick="touchRock();"/>
+    </div>
+
+    <input type="button" value="쿠키 생성" onclick="setCookie('test', 'cookie test, 쿠키 테스트', 1)">
+    <input type="button" value="쿠키 보기" onclick="alert(getCookie('test'))">
+    <input type="button" value="쿠키 삭제" onclick="setCookie('test', '', -1)">
+
+<script type="text/javascript">
+
+function touchRock(){
+
+    var yourName;
+
+    if(yourName){
+            alert(yourName);
+    }
+    else{
+        yourName = prompt("What is your name?" , "Enter your name here");
+        if(yourName){
+            alert("It is good to meet you");
+        };
+        document.getElementById("rockImg").src = "images_on.jpg";
+        setTimeout("document.getElementById('rockImg').src = 'images.jpeg'", 3000);
+    };
+
+};
+
+
+function writeCookie(name, value, days){
+    // 디폴트로 소멸일자가 없는 것으로 설정
+     var expires ="";
+
+     // 쿠키가 지속되는 날짜 지정
+     if(days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (day *24*60*60*1000));
+        expires = "; expires=" + date.toGMTstring();
+     }
+
+     // 쿠키에 이름, 값, 소멸일자를 설정
+     document.cookie = name + '=' + value + expires + "; path=/"'
+}
+
+
+function readCookie(name){
+    // 특정 쿠키를 찾아 값을 반환
+    var searchName = name + "=";
+    var cookies = document.cookie.split(';');
+    for(var i=0; i < cookies.length; i++){
+        var c= cookies[i];
+        while (c.charAt(0) == ' ')
+            c = c.substring(1, c.length);
+        if( c.indexOf(searchName) == 0)
+            return c.substring(searchName.length, c.length);
+    }
+    retrun null;
+}
+
+function eraseCookie(name){
+    // 특정 쿠키의 삭제
+    writeCookie(name, "", -1);
+}
+
+
+
+/*
+
+// 쿠키 생성
+function setCookie(cName, cValue, cDay){
+    var expire = new Date();
+    expire.setDate(expire.getDate() + cDay);
+    cookies = cName + '=' + escape(cValue) + '; path=/'; //한글깨짐을 막기위해 escape(cValue)
+    if(typeof cDay != 'undefined') cookies += ';expires=' + expire.toGMTString() + ';';
+    document.cookie = cookies;
+}
+
+// 쿠키 가져오기
+function getCookie(cName) {
+    cName = cName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cName);
+    var cValue = '';
+    if(start != -1) {
+        start += cName.length;
+        var end = cookieData.length;
+        cValue = cookieData.substring(start, end);
+    }
+    return unescape(cValue);
+}
+*/
+
+</script>
+</body>
+</html>
